@@ -25,24 +25,26 @@ export async function handleStatsCommand(request, requestBody) {
     if(user.length <= 16) {
         // Try to get the account data
         const accountRes = await fetch("https://api.ashcon.app/mojang/v1/user/" + user);
-        let accountData = await accountRes.text();
 
         // If the fetch wasn't successful then send their response back as to why it wasn't successful
-        if(!response.ok) {
+        if(!accountRes.ok) {
             return {
                 embeds: [
                     {
                         title: "Not successful",
-                        description: "Couldn't get the user UUID.\n```\n" + accountData + "\n```",
+                        description: "Couldn't get the user UUID.\n```\n" + accountRes.statusText + "\n```",
                         color: parseInt("F12525", 16)
                     }
                 ]
             };
         }
 
-        // Turn the response text into a JSON object
         try {
-            accountData = JSON.parse(accountData);
+            // Try to parse the response body into a JSON object
+            const accountData = await accountRes.json();
+
+            // Get their UUID
+            uuid = accountData.uuid;
         } catch(e) {
             // For some reason the API didn't return JSON... so return an error message
             return {
@@ -55,9 +57,6 @@ export async function handleStatsCommand(request, requestBody) {
                 ]
             };
         }
-
-        // Get their UUID
-        uuid = accountData.uuid;
     } else {
         // The provided user is longer than 16 characters so it should already be an UUID
         uuid = user;
@@ -85,19 +84,19 @@ export async function handleStatsCommand(request, requestBody) {
     
 
     // If the call wasn't successful then reply with a message as to why
-    if(!res.ok || data.success == false || !data.player) {
+    if(!res.ok || !data.success || !data.player) {
         return {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Couldn't get the data from Hypixel.\n```\n" + (data.cause || "No player data.") + "\n```",
+                    description: "Couldn't get the data from Hypixel.\n```\n" + (data.cause || "No player data") + "\n```",
                     color: parseInt("F12525", 16)
                 }
             ]
         };
     }
 
-    const username = data.displayname;
+    const username = data.player.displayname;
 
     // The player might have data, but not TNT Games stats. So check for TNT Games stats and if they're
     // not there then return an error message.
@@ -115,9 +114,9 @@ export async function handleStatsCommand(request, requestBody) {
 
     // OK so the player has stats and we have them
 
-    // Lets cache the data
-    let cache = caches.default;
-    await cache.put(requestBody.token + uuid, res);
+    // Lets cache the data                               [DISABLED FOR NOW]
+    //let cache = caches.default;                        [DISABLED FOR NOW]
+    //await cache.put(requestBody.token + uuid, res);    [DISABLED FOR NOW]
 
 
     // Time to define all the stats we want to show (general TNT Games stats)
@@ -125,9 +124,9 @@ export async function handleStatsCommand(request, requestBody) {
     // We get the playtime from the TNT Triathlon achievement which counts playtime in seconds
     let playtime = "0 minutes";
     if(data.player.achievements && data.player.achievements.tntgames_tnt_triathlon) {
-        const playtime = hypixelData.player.achievements.tntgames_tnt_triathlon;
-        const h = Math.floor(playtime / 60);
-        const m = Math.floor(playtime % 60);
+        const time = data.player.achievements.tntgames_tnt_triathlon;
+        const h = Math.floor(time / 60);
+        const m = Math.floor(time % 60);
 
         const hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
         const mDisplay = m > 0 ? m + (m == 1 ? " minute" : " minutes") : "";
@@ -137,11 +136,13 @@ export async function handleStatsCommand(request, requestBody) {
     data = data.player.stats.TNTGames;
 
     let wins = data.wins || 0;
-    wins += data.wins_pvprun; // For some weird reason PVP Run wins aren't counted into the total wins...
+    wins += (data.wins_pvprun || 0); // For some weird reason PVP Run wins aren't counted into the total wins...
 
     const winstreak = data.winstreak || 0;
     const coins = data.coins || 0;
     const particleEffect = data.new_active_particle_effect || "-";
+
+    // All these effects are made a bit more readable right here
     let deathEffect = "-";
     if(data.new_active_death_effect) {
         let effect = data.new_active_death_effect.replaceAll("_", " ");
@@ -161,7 +162,7 @@ export async function handleStatsCommand(request, requestBody) {
     let selectedHat = "-";
     if(data.new_selected_hat) {
         let hat = data.new_selected_hat.replaceAll("_", " ");
-        result.data.tnt.stats.selected_hat = hat.charAt(0).toUpperCase() + hat.slice(1);
+        selectedHat = hat.charAt(0).toUpperCase() + hat.slice(1);
     }
 
     // Now time for the settings
@@ -177,7 +178,7 @@ export async function handleStatsCommand(request, requestBody) {
     const prestigeParticlesWiz = data.show_wiz_pres ? data.show_wiz_pres : true;
 
 
-    // Ok now we have all info and we can return the embed!
+    // Ok now we have all info and we can return the embed
     return {
         embeds: [
             {
@@ -222,11 +223,11 @@ export async function handleStatsCommand(request, requestBody) {
                     text: "TNT Game specific stats coming soon..."
                 }
             }
-        ],
+        ]
     };
 }
 
 
 function beautifyNumber(num) {
-    return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
