@@ -40,7 +40,7 @@ export function handleRate(request, requestBody) {
                 description: "I rate `" + requestBody.data.options[0].value + "` **" + rating + "** out of 10",
                 color: colour,
                 footer: {
-                    text: "Request send by " + request.headers.get("x-real-ip")
+                    text: "Official rating"
                 }
             }
         ]
