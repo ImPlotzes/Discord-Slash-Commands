@@ -280,7 +280,7 @@ export async function handleStatsCommand(request, requestBody) {
                 title: rankPrefix + username + "'s TNT Games stats",
                 description: "These are the general TNT Games stats of " + username + ".",
                 url: "https://www.plotzes.ml/stats/" + uuid,
-                color: parseInt("0076cc", 16),
+                color: parseInt("76cc00", 16),
                 fields: [
                     {
                         name: "Last Login",

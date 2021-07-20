@@ -7,11 +7,15 @@ addEventListener("fetch", (event) => {
 // Import all the command handlers
 import { handleRate } from "./commands/rate"
 import { handleStatsCommand } from "./commands/stats"
+import { handleSource } from "./commands/source"
+import { handleInvite } from "./commands/invite"
 
 // Define all commands and their handlers
 const commands = {
     rate: handleRate,
-    stats: handleStatsCommand
+    stats: handleStatsCommand,
+    source: handleSource,
+    invite: handleInvite
 };
 
 
@@ -100,12 +104,6 @@ async function handleRequest(event) {
                                     title: "Not yet implemented",
                                     description: "This command hasn't been implemented yet.",
                                     color: parseInt("F12525", 16),
-                                    fields: [
-                                        {
-                                            name: "Debug information",
-                                            value: "```yml\nType: 3\n\nColo: " + request.cf.colo + "\nRequest Data: " + btoa(JSON.stringify(requestBody.data)) + "```"
-                                        }
-                                    ],
                                     timestamp: new Date()
                                 }
                             ]
@@ -124,12 +122,6 @@ async function handleRequest(event) {
                                     title: "Not yet implemented",
                                     description: "This command hasn't been implemented yet.",
                                     color: parseInt("F12525", 16),
-                                    fields: [
-                                        {
-                                            name: "Debug information",
-                                            value: "```yml\nType: Default\n\nColo: " + request.cf.colo + "\nRequest Data: " + btoa(JSON.stringify(requestBody.data)) + "```"
-                                        }
-                                    ],
                                     timestamp: new Date()
                                 }
                             ]
@@ -174,10 +166,7 @@ async function handleCommand(request, requestBody) {
                     title: "Not yet implemented",
                     description: "This command hasn't been implemented yet.",
                     color: parseInt("F12525", 16),
-                    timestamp: new Date(),
-                    footer: {
-                        text: "Request send by " + request.headers.get("x-real-ip")
-                    }
+                    timestamp: new Date()
                 }
             ]
         };
