@@ -10,6 +10,7 @@ import { handleStatsCommand } from "./commands/stats"
 import { handleSource } from "./commands/source"
 import { handleDiscord } from "./commands/discord"
 import { handleInvite } from "./commands/invite"
+import { handle8Ball } from "./commands/8ball";
 
 // Define all commands and their handlers
 const commands = {
@@ -17,7 +18,8 @@ const commands = {
     stats: handleStatsCommand,
     source: handleSource,
     discord: handleDiscord,
-    invite: handleInvite
+    invite: handleInvite,
+    "8ball": handle8Ball
 };
 
 
