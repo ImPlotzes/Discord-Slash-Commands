@@ -64,7 +64,7 @@ export async function handleStatsCommand(request, requestBody) {
                 embeds: [
                     {
                         title: "Not successful",
-                        description: "Couldn't get their UUID.\n```\n" + accountRes.statusText + "\n```",
+                        description: "Couldn't get the UUID of `" + user + "`.\n```\n" + accountRes.statusText + "\n```",
                         color: parseInt("F12525", 16)
                     }
                 ]
@@ -83,7 +83,7 @@ export async function handleStatsCommand(request, requestBody) {
                 embeds: [
                     {
                         title: "Not successful",
-                        description: "Couldn't get their UUID. Got an unexpected response.",
+                        description: "Couldn't get the UUID of `" + user + "`. Got an unexpected response.",
                         color: parseInt("F12525", 16)
                     }
                 ]
@@ -107,7 +107,7 @@ export async function handleStatsCommand(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Couldn't get the data from Hypixel. It might be offline.",
+                    description: "Couldn't get the data of `" + user + "` (UUID: `" + uuid + "`) from Hypixel. It might be offline.",
                     color: parseInt("F12525", 16)
                 }
             ]
@@ -121,7 +121,7 @@ export async function handleStatsCommand(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Couldn't get the data from Hypixel.\n```\n" + (data.cause || "No player data") + "\n```",
+                    description: "Couldn't get the data of `" + user + "` (UUID: `" + uuid + "`) from Hypixel.\n```\n" + (data.cause || "No data") + "\n```",
                     color: parseInt("F12525", 16)
                 }
             ]
@@ -137,7 +137,7 @@ export async function handleStatsCommand(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: username + " doesn't have any TNT Games stats.",
+                    description: "`" + username + "` doesn't have any TNT Games stats.",
                     color: parseInt("F12525", 16)
                 }
             ]
