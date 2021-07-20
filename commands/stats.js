@@ -15,6 +15,38 @@ const structure = {
 };
 
 
+// To convert games to their readable string
+const gameTypes = {
+    QUAKECRAFT: "Quake",
+    WALLS: "Walls",
+    PAINTBALL: "Paintball",
+    SURVIVAL_GAMES: "Blitz Survival Games",
+    TNTGAMES: "TNT Games",
+    VAMPIREZ: "VampireZ",
+    WALLS3: "Mega Walls",
+    ARCADE: "Arcade",
+    ARENA: "Arena",
+    UHC: "UHC Champions",
+    MCGO: "Cops and Crims",
+    BATTLEGROUND: "Warlords",
+    SUPER_SMASH: "Smash Heroes",
+    GINGERBREAD: "Turbo Kart Racers",
+    HOUSING: "Housing",
+    SKYWARS: "SkyWars",
+    TRUE_COMBAT: "Crazy Walls",
+    SPEED_UHC: "Speed UHC",
+    SKYCLASH: "SkyClash",
+    LEGACY: "Classic Games",
+    PROTOTYPE: "Prototype",
+    BEDWARS: "Bed Wars",
+    MURDER_MYSTERY: "Murder Mystery",
+    BUILD_BATTLE: "Build Battle",
+    DUELS: "Duels",
+    SKYBLOCK: "SkyBlock",
+    PIT: "Pit"
+}
+
+
 export async function handleStatsCommand(request, requestBody) {
     // Get the user (this can be their name OR their UUID)
     const user = requestBody.data.options[0].value;
@@ -32,7 +64,7 @@ export async function handleStatsCommand(request, requestBody) {
                 embeds: [
                     {
                         title: "Not successful",
-                        description: "Couldn't get the user UUID.\n```\n" + accountRes.statusText + "\n```",
+                        description: "Couldn't get their UUID.\n```\n" + accountRes.statusText + "\n```",
                         color: parseInt("F12525", 16)
                     }
                 ]
@@ -51,7 +83,7 @@ export async function handleStatsCommand(request, requestBody) {
                 embeds: [
                     {
                         title: "Not successful",
-                        description: "Couldn't get the user UUID. Got an unexpected response.",
+                        description: "Couldn't get their UUID. Got an unexpected response.",
                         color: parseInt("F12525", 16)
                     }
                 ]
@@ -119,7 +151,70 @@ export async function handleStatsCommand(request, requestBody) {
     //await cache.put(requestBody.token + uuid, res);    [DISABLED FOR NOW]
 
 
-    // Time to define all the stats we want to show (general TNT Games stats)
+    // Time to define all the stats we want to show 
+
+
+    // Get the their rank
+    let prefix = data.player.prefix;
+    let rank = data.player.rank;
+    let monthlyPackageRank = data.player.monthlyPackageRank;
+    let packageRank = data.player.newPackageRank || data.player.packageRank;
+    let rankPrefix = "";
+    switch(packageRank) {
+        case "VIP":
+            rankPrefix = "[VIP] ";
+            break;
+        case "VIP_PLUS":
+            rankPrefix = "[VIP+] ";
+            break;
+        case "MVP":
+            rankPrefix = "[MVP] ";
+            break;
+        case "MVP_PLUS":
+            rankPrefix = "[MVP+] ";
+            break;
+        default:
+            break;
+    }
+    switch(monthlyPackageRank) {
+        case "SUPERSTAR":
+            rankPrefix = "[MVP++] ";
+            break;
+        default: 
+            break;
+    }
+    switch(rank) {
+        case "YOUTUBER":
+            rankPrefix = "[YOUTUBE] ";
+            break;
+        case "HELPER":
+            rankPrefix = "[HELPER] ";
+            break;
+        case "MODERATOR":
+            rankPrefix = "[MOD] ";
+            break;
+        case "GAME_MASTER":
+            rankPrefix = "[GM] ";
+            break;
+        case "ADMIN":
+            rankPrefix = "[ADMIN] ";
+            break;
+        default:
+            break;
+    }
+    if(prefix) {
+        prefix = prefix.replace(/§./g, "");
+        rankPrefix = prefix + " ";
+    }
+    
+    // What their last played game was
+    const lastPlayed = gameTypes[data.player.mostRecentGameType] || "Unknown";
+
+    // When they logged in for the last time
+    let lastLogin;
+    if(data.player.lastLogin) {
+        lastLogin = Math.round(data.player.lastLogin / 1000);
+    }
 
     // We get the playtime from the TNT Triathlon achievement which counts playtime in seconds
     let playtime = "0 minutes";
@@ -169,24 +264,34 @@ export async function handleStatsCommand(request, requestBody) {
     // Currently all values default to 'true' but I'm not sure if some settings are turned off by default.
     // Please message me (Discord: Plotzes#8332; https://www.plotzes.ml/discord) if this isn't true
     data = data.flags || {};
-    const actionBarWiz = data.show_wizards_actionbar_info ? data.show_wizards_actionbar_info : true;
-    const actionBarRun = data.show_tntrun_actionbar_info ? data.show_tntrun_actionbar_info : true;
-    const actionBarTag = data.show_tnttag_actionbar_info ? data.show_tnttag_actionbar_info : true;
-    const tipHolograms = data.show_tip_holograms ? data.show_tip_holograms : true;
-    const cooldownMessageWiz = data.show_wizards_cooldown_notifications ? data.show_wizards_cooldown_notifications : true;
-    const doubleJumpFeather = data.give_dj_feather ? data.give_dj_feather : true;
-    const prestigeParticlesWiz = data.show_wiz_pres ? data.show_wiz_pres : true;
+    const actionBarWiz = data.show_wizards_actionbar_info != undefined ? data.show_wizards_actionbar_info : true;
+    const actionBarRun = data.show_tntrun_actionbar_info != undefined ? data.show_tntrun_actionbar_info : true;
+    const actionBarTag = data.show_tnttag_actionbar_info != undefined ? data.show_tnttag_actionbar_info : true;
+    const tipHolograms = data.show_tip_holograms != undefined ? data.show_tip_holograms : true;
+    const cooldownMessageWiz = data.show_wizards_cooldown_notifications != undefined ? data.show_wizards_cooldown_notifications : true;
+    const doubleJumpFeather = data.give_dj_feather != undefined ? data.give_dj_feather : true;
+    const prestigeParticlesWiz = data.show_wiz_pres != undefined ? data.show_wiz_pres : true;
 
 
     // Ok now we have all info and we can return the embed
     return {
         embeds: [
             {
-                title: username + "'s TNT Games stats",
+                title: rankPrefix + username + "'s TNT Games stats",
                 description: "These are the general TNT Games stats of " + username + ".",
                 url: "https://www.plotzes.ml/stats/" + uuid,
                 color: parseInt("0076cc", 16),
                 fields: [
+                    {
+                        name: "Last Login",
+                        value: (lastLogin ? "<t:" + lastLogin + ":R>" : "`Unknown`"),
+                        inline: true
+                    },
+                    {
+                        name: "Last Played Game",
+                        value: "`" + lastPlayed + "`",
+                        inline: true
+                    },
                     {
                         name: "Wins",
                         value: "`" + beautifyNumber(wins) + "`",
@@ -217,7 +322,7 @@ export async function handleStatsCommand(request, requestBody) {
                     }
                 ],
                 thumbnail: {
-                    url: "https://visage.surgeplay.com/bust/" + uuid
+                    url: "https://www.mc-heads.net/body/" + uuid + "/left"
                 },
                 footer: {
                     text: "TNT Game specific stats coming soon..."
