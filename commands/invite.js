@@ -3,7 +3,7 @@
 // actually being used anywhere in the code.
 const structure = {
     name: "invite",
-    description: "Get the invite link to the Discord server where you can report bugs or look at sneak peaks."
+    description: "Get the link to add these commands to your own server!"
 };
 
 
@@ -13,9 +13,12 @@ export function handleInvite(request, requestBody) {
     return {
         embeds: [
             {
-                title: "Discord invite link",
-                description: "Here you go! Click the button below to join the server.\n\nIf you want to share the link easily then you can also use https://www.plotzes.ml/discord.",
-                color: parseInt("76cc00", 16)
+                title: "Add these commands",
+                description: "Oh my god!! Thank you for being interested to adding these commands to your own server!\n\nThe button below will open a website where you can choose to what server to add these commands.",
+                color: parseInt("76cc00", 16),
+                thumbnail: {
+                    url: "https://media1.tenor.com/images/d076ed43f9ce9e26d71dcb74a7bd898f/tenor.gif"
+                }
             }
         ],
         components: [
@@ -25,8 +28,12 @@ export function handleInvite(request, requestBody) {
                     {
                         type: 2,
                         style: 5,
-                        label: "Join server!",
-                        url: "https://www.plotzes.ml/discord"
+                        emoji: {
+                            id: null,
+                            name: "😊"
+                        },
+                        label: "Add the commands!",
+                        url: "https://discord.com/api/oauth2/authorize?client_id=865321519605612554&scope=applications.commands"
                     }
                 ]
             }

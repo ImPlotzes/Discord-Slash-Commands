@@ -8,6 +8,7 @@ addEventListener("fetch", (event) => {
 import { handleRate } from "./commands/rate"
 import { handleStatsCommand } from "./commands/stats"
 import { handleSource } from "./commands/source"
+import { handleDiscord } from "./commands/discord"
 import { handleInvite } from "./commands/invite"
 
 // Define all commands and their handlers
@@ -15,6 +16,7 @@ const commands = {
     rate: handleRate,
     stats: handleStatsCommand,
     source: handleSource,
+    discord: handleDiscord,
     invite: handleInvite
 };
 
