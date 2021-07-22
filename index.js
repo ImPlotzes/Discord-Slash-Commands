@@ -4,9 +4,13 @@ addEventListener("fetch", (event) => {
 });
 
 
-// Import all the command handlers
+// Import the utils
+import { editMessage } from "./utils";
+
+
+// Import all the command and component handlers
 import { handleRate } from "./commands/rate"
-import { handleStatsCommand } from "./commands/stats"
+import { handleStatsCommand, handleStatsMenu } from "./commands/stats"
 import { handleSource } from "./commands/source"
 import { handleDiscord } from "./commands/discord"
 import { handleInvite } from "./commands/invite"
@@ -20,6 +24,11 @@ const commands = {
     discord: handleDiscord,
     invite: handleInvite,
     "8ball": handle8Ball
+};
+
+// Define all component handlers
+const components = {
+    stats_menu: handleStatsMenu
 };
 
 
@@ -99,20 +108,36 @@ async function handleRequest(event) {
 
         // MESSAGE_COMPONENT
         case 3:
-            // I don't expect a component interaction since I haven't added any components yet
-            return new Response(JSON.stringify({
-                        type: 4,
-                        data: {
-                            embeds: [
-                                {
-                                    title: "Not yet implemented",
-                                    description: "This command hasn't been implemented yet.",
-                                    color: parseInt("F12525", 16),
-                                    timestamp: new Date()
-                                }
-                            ]
-                        }
-                    }), {headers: {"content-type": "application/json"}});
+            // Get the handler of the component
+            const handler = components[requestBody.data.custom_id];
+
+            // If there is no handler then reply with a not-yet-implemented message which only the user can see.
+            // Else just execute the handler and return that response
+            if(!handler) {
+                return new Response(JSON.stringify({
+                    type: 4,
+                    data: {
+                        flags: 1<<6,
+                        embeds: [
+                            {
+                                title: "Not yet implemented",
+                                description: "This command hasn't been implemented yet.",
+                                color: parseInt("F12525", 16),
+                                timestamp: new Date()
+                            }
+                        ]
+                    }
+                }), {headers: {"content-type": "application/json"}});
+            } else {
+                // Get the generated message from the component handler
+                const response = await handler.call(this, request, requestBody);
+
+                // Edit the original message (that's what type 7 does) with the response from the handler
+                return new Response(JSON.stringify({
+                    type: 7,
+                    data: response
+                }), {headers: {"content-type": "application/json"}})
+            }
             break;
 
         // SOME_WEIRD_MESSAGE_WITHOUT_A_VALID_TYPE
@@ -159,12 +184,10 @@ async function handleCommand(request, requestBody) {
     // Get the command handler associated with the command name
     const handler = commands[requestBody.data.name];
 
-    let response;
-
     // If there is no handler then reply with not-yet-implemented message
     // else execute the handler
     if(!handler) {
-        response = {
+        await editMessage({
             embeds: [
                 {
                     title: "Not yet implemented",
@@ -173,21 +196,8 @@ async function handleCommand(request, requestBody) {
                     timestamp: new Date()
                 }
             ]
-        };
+        }, requestBody);
     } else {
-        response = await handler.call(this, request, requestBody);
+        await handler.call(this, request, requestBody);
     }
-    // 'response' is now either the command response or a not-yet-implemented message
-
-
-    const editURL = "https://discord.com/api/v8/webhooks/865321519605612554/" + requestBody.token + "/messages/" + ((requestBody.message && requestBody.message.id) || "@original");
-
-    // Edit the thinking message with the generated one
-    await fetch(editURL, {
-        method: "PATCH",
-        headers: {
-            "content-type": "application/json"
-        },
-        body: JSON.stringify(response),
-    });
 }

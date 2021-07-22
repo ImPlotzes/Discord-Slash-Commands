@@ -7,10 +7,14 @@ const structure = {
 };
 
 
-export function handleSource(request, requestBody) {
+// Import the utils
+import { editMessage } from "../utils";
+
+
+export async function handleSource(request, requestBody) {
     // This is just a static embed so we can return it right away
 
-    return {
+    await editMessage({
         embeds: [
             {
                 title: "Source Code",
@@ -34,5 +38,5 @@ export function handleSource(request, requestBody) {
                 ]
             }
         ]
-    };
+    }, requestBody.token);
 }

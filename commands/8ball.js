@@ -15,6 +15,10 @@ const structure = {
 };
 
 
+// Import the utils
+import { editMessage } from "../utils"
+
+
 const answers = [
     // Positive answers
     "It is certain",
@@ -44,7 +48,7 @@ const answers = [
 ]
 
 
-export function handle8Ball(request, requestBody) {
+export async function handle8Ball(request, requestBody) {
     // Get the question
     const question = requestBody.data.options[0].value;
 
@@ -52,7 +56,7 @@ export function handle8Ball(request, requestBody) {
     const answer = answers[Math.round(Math.random() * (answers.length - 1))];
 
     // Return the result
-    return {
+    await editMessage({
         embeds: [
             {
                 title: "The Magic 8 Ball has answered!",
@@ -69,7 +73,7 @@ export function handle8Ball(request, requestBody) {
                 ]
             }
         ]
-    }
+    }, requestBody.token);
 }
 
 

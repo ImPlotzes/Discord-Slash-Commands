@@ -7,10 +7,14 @@ const structure = {
 };
 
 
-export function handleInvite(request, requestBody) {
+// Import the utils
+import { editMessage } from "../utils"
+
+
+export async function handleInvite(request, requestBody) {
     // This is a static embed so we can return it right away
 
-    return {
+    await editMessage({
         embeds: [
             {
                 title: "Add these commands",
@@ -38,5 +42,5 @@ export function handleInvite(request, requestBody) {
                 ]
             }
         ]
-    };
+    }, requestBody.token);
 }

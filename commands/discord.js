@@ -7,10 +7,14 @@ const structure = {
 };
 
 
-export function handleDiscord(request, requestBody) {
+// Import the utils
+import { editMessage } from "../utils"
+
+
+export async function handleDiscord(request, requestBody) {
     // This is a static embed so we can return it right away
 
-    return {
+    await editMessage({
         embeds: [
             {
                 title: "Discord invite link",
@@ -31,5 +35,5 @@ export function handleDiscord(request, requestBody) {
                 ]
             }
         ]
-    };
+    }, requestBody.token)
 }

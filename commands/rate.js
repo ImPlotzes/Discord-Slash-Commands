@@ -15,7 +15,11 @@ const structure = {
 };
 
 
-export function handleRate(request, requestBody) {
+// Import the utils
+import { editMessage } from "../utils"
+
+
+export async function handleRate(request, requestBody) {
     // Generate a random rating (Shhh don't tell anyone it's random ;D)
     const rating = Math.round(Math.random() * 10);
 
@@ -33,7 +37,7 @@ export function handleRate(request, requestBody) {
     }
 
     // Return the embed stucture
-    return {
+    await editMessage({
         embeds: [
             {
                 title: "Rating",
@@ -44,5 +48,5 @@ export function handleRate(request, requestBody) {
                 }
             }
         ]
-    };
+    }, requestBody.token);
 }
