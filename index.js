@@ -16,6 +16,7 @@ import { handleDiscord } from "./commands/discord"
 import { handleInvite } from "./commands/invite"
 import { handle8Ball } from "./commands/8ball";
 import { handlePing } from "./commands/ping";
+import { handleSkin } from "./commands/skin"
 
 // Define all commands and their handlers
 const commands = {
@@ -25,7 +26,8 @@ const commands = {
     discord: handleDiscord,
     invite: handleInvite,
     "8ball": handle8Ball,
-    ping: handlePing
+    ping: handlePing,
+    skin: handleSkin
 };
 
 // Define all component handlers
