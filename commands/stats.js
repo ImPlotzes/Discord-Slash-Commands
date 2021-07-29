@@ -16,7 +16,7 @@ const structure = {
 
 
 // Import the utils
-import { editMessage } from "../utils";
+import { editMessage, beautifyNumber } from "../utils";
 
 
 // To convert games to their readable string
@@ -417,14 +417,6 @@ export async function handleStatsCommand(request, requestBody) {
 
     // Ok done!
 }
-
-
-
-// Add the thousands separators to make a number more readable
-function beautifyNumber(num) {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
 
 
 export async function handleStatsMenu(request, requestBody) {

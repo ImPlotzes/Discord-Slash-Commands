@@ -10,3 +10,9 @@ export async function editMessage(newMessage, token) {
         body: JSON.stringify(newMessage),
     });
 }
+
+
+// Add the thousands separators to make a number more readable
+export function beautifyNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

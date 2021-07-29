@@ -15,6 +15,7 @@ import { handleSource } from "./commands/source"
 import { handleDiscord } from "./commands/discord"
 import { handleInvite } from "./commands/invite"
 import { handle8Ball } from "./commands/8ball";
+import { handlePing } from "./commands/ping";
 
 // Define all commands and their handlers
 const commands = {
@@ -23,7 +24,8 @@ const commands = {
     source: handleSource,
     discord: handleDiscord,
     invite: handleInvite,
-    "8ball": handle8Ball
+    "8ball": handle8Ball,
+    ping: handlePing
 };
 
 // Define all component handlers
@@ -196,7 +198,7 @@ async function handleCommand(request, requestBody) {
                     timestamp: new Date()
                 }
             ]
-        }, requestBody);
+        }, requestBody.token);
     } else {
         await handler.call(this, request, requestBody);
     }

@@ -18,10 +18,18 @@ const structure = {
 // Import the utils
 import { editMessage } from "../utils"
 
+// Things that deserve the absolute best rating!
+const bestThings = [
+    "kumo",
+    "july",
+    "haru",
+    "hayden"
+];
+
 
 export async function handleRate(request, requestBody) {
     // Generate a random rating (Shhh don't tell anyone it's random ;D)
-    const rating = Math.round(Math.random() * 10);
+    let rating = Math.round(Math.random() * 10);
 
     // Choose embed colour based on rating
     // Higher than 5   ==>    Green  (#25dc10)
@@ -36,12 +44,21 @@ export async function handleRate(request, requestBody) {
         colour = parseInt("dc1010", 16);
     }
 
+    // Get the thing to rate
+    const subject = requestBody.data.options[0].value;
+
+    // If it's one of the best things then change the rating and embed colour
+    if(bestThings.includes(subject.toLowerCase())) {
+        rating = "∞";
+        colour = parseInt("36393f", 16)
+    }
+
     // Return the embed stucture
     await editMessage({
         embeds: [
             {
                 title: "Rating",
-                description: "I rate `" + requestBody.data.options[0].value + "` **" + rating + "** out of 10",
+                description: "I rate `" + subject + "` **" + rating + "** out of 10",
                 color: colour,
                 footer: {
                     text: "Official rating"
