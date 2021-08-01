@@ -46,7 +46,7 @@ async function handleRequest(event) {
     const request = event.request;
     // Reject anything but POST requests
     if(request.method != "POST") {
-        return new Response("{\"error\":\"400 - BAD REQUEST\",\"reason\":\"The " + request.method + " method is not allowed.\"}", {status: 400})
+        return new Response("{\"error\":\"400 - BAD REQUEST\",\"reason\":\"The " + request.method + " method is not allowed.\"}", {status: 405})
     }
     
     const body = await request.text();
@@ -98,7 +98,7 @@ async function handleRequest(event) {
         // PING
         case 1:
             // Return a response with type 1 to ACK the ping
-            return new Response("{\"type\":1}", {headers: {"content-type": "application/json;charset=UTF-8"}});
+            return new Response("{\"type\":1}", {headers: {"content-type": "application/json"}});
             break;
 
         // APPLICATION_COMMAND
