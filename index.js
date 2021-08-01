@@ -18,6 +18,7 @@ import { handle8Ball } from "./commands/8ball";
 import { handlePing } from "./commands/ping";
 import { handleSkin } from "./commands/skin";
 import { handleCat } from "./commands/cat";
+import { handleDog } from "./commands/dog";
 
 // Define all commands and their handlers
 const commands = {
@@ -29,7 +30,8 @@ const commands = {
     "8ball": handle8Ball,
     ping: handlePing,
     skin: handleSkin,
-    cat: handleCat
+    cat: handleCat,
+    dog: handleDog
 };
 
 // Define all component handlers
