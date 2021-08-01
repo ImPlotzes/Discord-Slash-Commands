@@ -9,14 +9,15 @@ import { editMessage } from "./utils";
 
 
 // Import all the command and component handlers
-import { handleRate } from "./commands/rate"
-import { handleStatsCommand, handleStatsMenu } from "./commands/stats"
-import { handleSource } from "./commands/source"
-import { handleDiscord } from "./commands/discord"
-import { handleInvite } from "./commands/invite"
+import { handleRate } from "./commands/rate";
+import { handleStatsCommand, handleStatsMenu } from "./commands/stats";
+import { handleSource } from "./commands/source";
+import { handleDiscord } from "./commands/discord";
+import { handleInvite } from "./commands/invite";
 import { handle8Ball } from "./commands/8ball";
 import { handlePing } from "./commands/ping";
-import { handleSkin } from "./commands/skin"
+import { handleSkin } from "./commands/skin";
+import { handleCat } from "./commands/cat";
 
 // Define all commands and their handlers
 const commands = {
@@ -27,7 +28,8 @@ const commands = {
     invite: handleInvite,
     "8ball": handle8Ball,
     ping: handlePing,
-    skin: handleSkin
+    skin: handleSkin,
+    cat: handleCat
 };
 
 // Define all component handlers
