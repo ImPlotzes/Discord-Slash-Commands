@@ -21,7 +21,7 @@ export async function handleSource(request, requestBody) {
                 description: "This application is open source. You can check out the GitHub repo with the source code by clicking the button below. Don't be scared to scour through the code and look for bugs.",
                 color: parseInt("76cc00", 16),
                 image: {
-                    url: "https://repository-images.githubusercontent.com/387602281/77d1db5e-ad27-4e3e-a463-164cde00c182"
+                    url: "https://repository-images.githubusercontent.com/387602281/19aa846f-851d-4140-be7e-822ca097a2be"
                 }
             }
         ],
