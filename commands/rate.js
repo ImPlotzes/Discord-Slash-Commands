@@ -48,7 +48,7 @@ export async function handleRate(request, requestBody) {
     const subject = requestBody.data.options[0].value;
 
     // If it's one of the best things then change the rating and embed colour
-    if(bestThings.includes(subject.toLowerCase())) {
+    if(bestThings.includes(subject.toLowerCase().replace(/\s+/g, ""))) {
         rating = "∞";
         colour = parseInt("36393f", 16)
     }
