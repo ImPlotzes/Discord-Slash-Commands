@@ -1055,7 +1055,7 @@ export async function handleStatsMenu(request, requestBody) {
             const witherDeaths = tntData.new_witherwizard_deaths ? tntData.new_witherwizard_deaths : 0;
 
             // Create the class specific stats table
-            let table = "```\n" +
+            let table = "```cs\n" +
             "Class      | Kills     | Deaths    \n" +
             "-----------+-----------+-----------\n" +
             "Ancient    | " + (beautifyNumber(ancientKills) + "          ").slice(0, 10) + "| " + (beautifyNumber(ancientDeaths) + "          ").slice(0, 10) + "\n" +
