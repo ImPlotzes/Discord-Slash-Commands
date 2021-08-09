@@ -23,7 +23,9 @@ const bestThings = [
     "kumo",
     "july",
     "haru",
-    "hayden"
+    "hayden",
+    "bolt",
+    "erza"
 ];
 
 
