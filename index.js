@@ -21,6 +21,7 @@ import { handleCat } from "./commands/cat";
 import { handleDog } from "./commands/dog";
 import { handleAvatar } from "./commands/avatar";
 import { handleFrog } from "./commands/frog";
+import { handleThink } from "./commands/think";
 
 // Define all commands and their handlers
 const commands = {
@@ -35,7 +36,8 @@ const commands = {
     cat: handleCat,
     dog: handleDog,
     avatar: handleAvatar,
-    frog: handleFrog
+    frog: handleFrog,
+    think: handleThink
 };
 
 // Define all component handlers
