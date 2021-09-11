@@ -312,8 +312,8 @@ export async function handleStatsCommand(request, requestBody) {
         deathEffect = effect.charAt(0).toUpperCase() + effect.slice(1);
     }
     let doubleJumpEffect = "-";
-    if(data.new_double_jump_effect) {
-        let effect = data.new_double_jump_effect.replaceAll("dje_", "");
+    if(tntData.new_double_jump_effect) {
+        let effect = tntData.new_double_jump_effect.replaceAll("dje_", "");
         effect = effect.replaceAll("_", " ");
         doubleJumpEffect = effect.charAt(0).toUpperCase() + effect.slice(1);
     }
@@ -570,8 +570,8 @@ export async function handleStatsMenu(request, requestBody) {
                 deathEffect = effect.charAt(0).toUpperCase() + effect.slice(1);
             }
             let doubleJumpEffect = "-";
-            if(data.new_double_jump_effect) {
-                let effect = data.new_double_jump_effect.replaceAll("dje_", "");
+            if(tntData.new_double_jump_effect) {
+                let effect = tntData.new_double_jump_effect.replaceAll("dje_", "");
                 effect = effect.replaceAll("_", " ");
                 doubleJumpEffect = effect.charAt(0).toUpperCase() + effect.slice(1);
             }
