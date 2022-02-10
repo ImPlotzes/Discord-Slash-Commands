@@ -18,7 +18,7 @@ export async function handleInvite(request, requestBody) {
         embeds: [
             {
                 title: "Add these commands",
-                description: "Oh my god!! Thank you for being interested to adding these commands to your own server!\n\nThe button below will open a website where you can choose to what server to add these commands.",
+                description: "Oh my god!! Thank you for being interested to adding these commands to your own server!\n\nThe button below will open a menu where you can choose to what server to add these commands.",
                 color: parseInt("76cc00", 16),
                 thumbnail: {
                     url: "https://media1.tenor.com/images/d076ed43f9ce9e26d71dcb74a7bd898f/tenor.gif"

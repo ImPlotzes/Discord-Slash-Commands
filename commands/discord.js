@@ -30,7 +30,7 @@ export async function handleDiscord(request, requestBody) {
                         type: 2,
                         style: 5,
                         label: "Join server!",
-                        url: "https://www.plotzes.ml/discord"
+                        url: "https://discord.gg/s2WczPFXnv"
                     }
                 ]
             }
