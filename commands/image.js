@@ -23,10 +23,10 @@ export async function handleImage(request, requestBody) {
     const subject = requestBody.data.options[0].value;
 
     // Get the images for that subject
-    const response = await fetch("https://api.pexels.com/v1/search?query=" + encodeURIComponent(subject));
+    const response = await fetch("https://api.pexels.com/v1/search?per_page=80&query=" + subject.replace(/ /g, "+"));
 
     // If the fetch wasn't successful then send their response back as to why it wasn't successful
-    if(!response.ok) {
+    if(response.status != 200) {
         await editMessage({
             embeds: [
                 {
@@ -57,10 +57,23 @@ export async function handleImage(request, requestBody) {
         return;
     }
 
+    if(imageData.photo.length == 0) {
+        await editMessage({
+            embeds: [
+                {
+                    title: "Not successful",
+                    description: "Couldn't find any images of that.",
+                    color: parseInt("F12525", 16)
+                }
+            ]
+        }, requestBody.token);
+        return;
+    }
+
     // Get the URL from a random photo
-    let randomImageURL;
+    let randomImage;
     try {
-        randomImageURL = imageData.photos[Math.round((imageData.photos.length - 1) * Math.random())].src.medium;
+        randomImage = imageData.photos[Math.round((imageData.photos.length - 1) * Math.random())];
     } catch(e) {
         await editMessage({
             embeds: [
@@ -80,9 +93,12 @@ export async function handleImage(request, requestBody) {
             {
                 title: subject,
                 image: {
-                    url: randomImageURL
+                    url: randomImage.src.medium
                 },
-                color: parseInt("76cc00", 16)
+                footer: {
+                    text: randomImage.alt
+                },
+                color: parseInt(randomImage.avg_color.replace("#", ""), 16)
             }
         ]
     }, requestBody.token);

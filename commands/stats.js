@@ -298,8 +298,7 @@ export async function handleStatsCommand(request, requestBody) {
 
     const tntData = data.player.stats.TNTGames;
 
-    let wins = tntData.wins || 0;
-    wins += (tntData.wins_pvprun || 0); // For some weird reason PVP Run wins aren't counted into the total wins...
+    const wins = tntData.wins || 0;
 
     const winstreak = tntData.winstreak || 0;
     const coins = tntData.coins || 0;
