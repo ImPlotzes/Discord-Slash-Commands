@@ -22,16 +22,30 @@ export async function handleImage(request, requestBody) {
     // Get the subject
     const subject = requestBody.data.options[0].value;
 
-    // Get the images for that subject
-    const response = await fetch("https://api.pexels.com/v1/search?per_page=80&query=" + subject.replace(/ /g, "+"));
+    // Define base url
+    let url = "https://img-srch.glitch.me/api/imagesearch/" + encodeURIComponent(subject) + "?offset=";
 
-    // If the fetch wasn't successful then send their response back as to why it wasn't successful
-    if(response.status != 200) {
+    // Pick a random offset so we don't always just get one of the first 10 pictures
+    let offset = Math.round(Math.random() * 10) * 10;
+
+    // Add the offset to the url
+    url += offset;
+
+    // Get 10 random pictures of the API
+    // (Added User-Agent else it will return status 403 - Forbidden)
+    const response = await fetch(url, {
+        headers: {
+            "user-agent": "Plotzes-Commands-Discord-Bot / vX.X.X (Discord: Plotzes#8332)"
+        }
+    });
+
+    // If response wasn't successful then return an error message
+    if(!response.ok) {
         await editMessage({
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Couldn't request images. Code: `" + response.status + "`",
+                    description: "Couldn't fetch the random pictures. Code: `" + response.status + "`",
                     color: parseInt("F12525", 16)
                 }
             ]
@@ -39,66 +53,36 @@ export async function handleImage(request, requestBody) {
         return;
     }
 
-    let imageData;
+    // Try to parse the response body
+    // If it doesn't work then return an error
+    let responseBody;
     try {
-        // Try to parse the response body into a JSON object
-        imageData = await response.json();
-    } catch(e) {
-        // For some reason the API didn't return JSON... so return an error message
-        await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "Got an unexpected internal response.",
-                    color: parseInt("F12525", 16)
-                }
-            ]
-        }, requestBody.token);
-        return;
-    }
-
-    if(imageData.photo.length == 0) {
-        await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "Couldn't find any images of that.",
-                    color: parseInt("F12525", 16)
-                }
-            ]
-        }, requestBody.token);
-        return;
-    }
-
-    // Get the URL from a random photo
-    let randomImage;
-    try {
-        randomImage = imageData.photos[Math.round((imageData.photos.length - 1) * Math.random())];
+        responseBody = await response.json();
     } catch(e) {
         await editMessage({
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Didn't get the expected response format.",
-                    color: parseInt("F12525", 16)
+                    description: "Got an unexpected response format. Try again later!",
+                    color: parseInt("F12525")
                 }
             ]
         }, requestBody.token);
         return;
     }
 
-    // Return the image
+    // Pick a random picture from the response array
+    const imageObject = responseBody[Math.round(Math.random() * (responseBody.length - 1))];
+
+    // Return the embed with the URL from the object
     await editMessage({
         embeds: [
             {
                 title: subject,
                 image: {
-                    url: randomImage.src.medium
+                    url: imageObject.url
                 },
-                footer: {
-                    text: randomImage.alt
-                },
-                color: parseInt(randomImage.avg_color.replace("#", ""), 16)
+                color: parseInt("76cc00", 16)
             }
         ]
     }, requestBody.token);
