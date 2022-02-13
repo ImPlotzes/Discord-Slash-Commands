@@ -73,7 +73,7 @@ export async function handleSkin(request, requestBody) {
                     url: "https://www.mc-heads.net/body/" + uuid
                 },
                 thumbnail: {
-                    url: "https://www.mc-heads.net/avatar/" + uuid
+                    url: "https://skins.plotzes.ml/face?player=" + uuid
                 },
                 url: "https://minerender.org/embed/skin/?skin=" + accountData.username + "&shadow=true"
             }
