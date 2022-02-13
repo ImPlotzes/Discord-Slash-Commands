@@ -223,13 +223,13 @@ export async function handleLeaderboard(request, requestBody) {
         return;
     }
 
-    // There was a player selected, so now get the actual name
-    player = player.value;
+    // There was a player selected, so now get the actual name or UUID
+    player = player.value.replace(/-/g, "").toLowerCase();
 
     // Go through the leaderboard and give everyone their rank
     let selectedPlayerRank = -1;
     for(let i = 0; i < leaderboard.length; i++) {
-        if(leaderboard[i].name.toLowerCase() == player.toLowerCase()) {
+        if(player == leaderboard[i].name.toLowerCase() || player == leaderboard[i].id) {
             selectedPlayerRank = i;
             break;
         }
