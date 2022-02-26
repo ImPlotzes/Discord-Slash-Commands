@@ -214,7 +214,7 @@ export async function handleLeaderboard(request, requestBody) {
                     title: "TNT Wizards",
                     description: "```\n" + table + "\n```",
                     footer: {
-                        text: beautifyNumber(leaderboard.length) + " total entries"
+                        text: beautifyNumber(leaderboard.length) + " total players"
                     },
                     color: parseInt("76cc00", 16)
                 }
@@ -254,7 +254,7 @@ export async function handleLeaderboard(request, requestBody) {
                     title: "TNT Wizards",
                     description: "The player `" + player + "` isn't on the leaderboard. To add that player click [here](https://www.plotzes.ml/stats/" + encodeURIComponent(player) +").\n\nShowing the top ten players:\n```\n" + table + "\n```",
                     footer: {
-                        text: beautifyNumber(leaderboard.length) + " total entries"
+                        text: beautifyNumber(leaderboard.length) + " total players"
                     },
                     color: parseInt("76cc00", 16)
                 }
@@ -286,7 +286,7 @@ export async function handleLeaderboard(request, requestBody) {
                     title: "TNT Wizards",
                     description: "```\n" + table + "\n```",
                     footer: {
-                        text: beautifyNumber(leaderboard.length) + " total entries"
+                        text: beautifyNumber(leaderboard.length) + " total players"
                     },
                     color: parseInt("76cc00", 16)
                 }
@@ -321,7 +321,7 @@ export async function handleLeaderboard(request, requestBody) {
                     title: "TNT Wizards",
                     description: "```\n" + table + "\n```",
                     footer: {
-                        text: beautifyNumber(leaderboard.length) + " total entries"
+                        text: beautifyNumber(leaderboard.length) + " total players"
                     },
                     color: parseInt("76cc00", 16)
                 }

@@ -130,7 +130,7 @@ export async function handleStatsCommand(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: body.message + " (`" + body.code + "`)",
+                    description: body.message + "\n```\n" + body.code + "\n```",
                     color: parseInt("F12525", 16)
                 }
             ]
