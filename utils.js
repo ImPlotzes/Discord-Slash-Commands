@@ -2,7 +2,7 @@ export async function editMessage(newMessage, token) {
     const editURL = "https://discord.com/api/v9/webhooks/865321519605612554/" + token + "/messages/@original";
 
     // Edit the thinking message with the generated one and return the response
-    return await fetch(editURL, {
+    return fetch(editURL, {
         method: "PATCH",
         headers: {
             "content-type": "application/json"

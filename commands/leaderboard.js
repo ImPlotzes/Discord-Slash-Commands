@@ -136,7 +136,7 @@ export async function handleLeaderboard(request, requestBody) {
     try {
         lbResponse = await fetch("https://api.plotzes.ml/storage?name=leaderboard.json", {
             headers: {
-                "user-agent": "YOUR OWN BOT!!! (The '/leaderboard' command)"
+                "user-agent": (SCRIPT_IDENTIFIER || "bot-clone") + " (The '/leaderboard' command)"
             }
         });
     } catch(e) {

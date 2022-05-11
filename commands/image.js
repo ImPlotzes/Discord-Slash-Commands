@@ -79,8 +79,12 @@ export async function handleImage(request, requestBody) {
         embeds: [
             {
                 title: subject,
+                url: imageObject.pageUrl,
                 image: {
                     url: imageObject.url
+                },
+                footer: {
+                    text: imageObject.alt
                 },
                 color: parseInt("76cc00", 16)
             }

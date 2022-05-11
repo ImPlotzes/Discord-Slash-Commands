@@ -1,8 +1,5 @@
 // Command stucture for when I want to change it.
 // Changing it is done manually so this 'structure' isn't 
-
-import { editMessage } from "../utils";
-
 // actually being used anywhere in the code.
 const structure = {
     name: "avatar",
@@ -16,6 +13,9 @@ const structure = {
     ]
 };
 
+
+// Import the utils
+import { editMessage } from "../utils";
 
 
 export async function handleAvatar(request, requestBody) {

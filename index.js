@@ -24,6 +24,9 @@ import { handleFrog } from "./commands/frog";
 import { handleThink } from "./commands/think";
 import { handleImage } from "./commands/image";
 import { handleLeaderboard } from "./commands/leaderboard";
+import { handleYesterday } from "./commands/yesterday";
+import { handleDaily } from "./commands/daily";
+import { handleMonthly } from "./commands/monthly";
 
 // Define all commands and their handlers
 const commands = {
@@ -41,7 +44,10 @@ const commands = {
     frog: handleFrog,
     think: handleThink,
     image: handleImage,
-    leaderboard: handleLeaderboard
+    leaderboard: handleLeaderboard,
+    yesterday: handleYesterday,
+    daily: handleDaily,
+    monthly: handleMonthly
 };
 
 // Define all component handlers
@@ -51,7 +57,7 @@ const components = {
 
 
 // Application's public key to verify each requests signature
-const PUBLIC_KEY = "f73ae9e497f66012e098b5b1a912ac6fd172d1f00bb2d24c1531edfca81973cb";
+const PUBLIC_KEY = APPLICATION_PUBLIC_KEY;
 
 
 async function handleRequest(event) {

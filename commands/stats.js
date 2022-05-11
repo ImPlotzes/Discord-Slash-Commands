@@ -91,7 +91,7 @@ export async function handleStatsCommand(request, requestBody) {
     try {
         response = await fetch("https://api.plotzes.ml/stats?player=" + encodeURIComponent(user), {
             headers: {
-                "user-agent": "YOUR OWN BOT!!! (The '/stats' command)"
+                "user-agent": (SCRIPT_IDENTIFIER || "bot-clone") + " (The '/stats' command)"
             }
         });
     } catch(e) {
@@ -225,7 +225,9 @@ export async function handleStatsCommand(request, requestBody) {
     // user selects a specific game in the dropdown menu quickly.
     // The cache expects a URL for the first parameter so we make one up.
     const cache = caches.default;
-    await cache.put("https://thisismycache.com/" + messageJson.id, new Response(JSON.stringify(data)));
+    const cacheResponse = new Response(JSON.stringify(data));
+    cacheResponse.headers.set("Cache-Control", "max-age=604800")
+    await cache.put("https://thisismycache.com/" + messageJson.id, cacheResponse);
 }
 
 
@@ -249,7 +251,7 @@ export async function handleStatsMenu(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Couldn't find the player data in the cache. This is either an old message or the original command was handled by another colo.",
+                    description: "Couldn't find the player data in the cache. This is either an old message or the original command was handled by another colo.\nPlease execute this command again.",
                     color: parseInt("F12525", 16),
                     footer: {
                         text: "This colo: " + request.cf.colo
@@ -593,23 +595,6 @@ export async function handleStatsMenu(request, requestBody) {
 
         // Wizards (Best game ever :D)
         case "wiz":
-
-            // Create the class specific stats table
-            let table = "```cs\n" +
-            "Class      | Kills     | Deaths    \n" +
-            "-----------+-----------+-----------\n" +
-            "Ancient    | " + (beautifyNumber(data.wiz.classes[0][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[0][1]) + "          ").slice(0, 10) + "\n" +
-            "Blood      | " + (beautifyNumber(data.wiz.classes[1][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[1][1]) + "          ").slice(0, 10) + "\n" +
-            "Fire       | " + (beautifyNumber(data.wiz.classes[2][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[2][1]) + "          ").slice(0, 10) + "\n" +
-            "Hydro      | " + (beautifyNumber(data.wiz.classes[3][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[3][1]) + "          ").slice(0, 10) + "\n" +
-            "Ice        | " + (beautifyNumber(data.wiz.classes[4][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[4][1]) + "          ").slice(0, 10) + "\n" +
-            "Kinetic    | " + (beautifyNumber(data.wiz.classes[5][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[5][1]) + "          ").slice(0, 10) + "\n" +
-            "Storm      | " + (beautifyNumber(data.wiz.classes[6][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[6][1]) + "          ").slice(0, 10) + "\n" +
-            "Toxic      | " + (beautifyNumber(data.wiz.classes[7][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[7][1]) + "          ").slice(0, 10) + "\n" +
-            "Wither     | " + (beautifyNumber(data.wiz.classes[8][0]) + "          ").slice(0, 10) + "| " + (beautifyNumber(data.wiz.classes[8][1]) + "          ").slice(0, 10) + "\n" +
-            "```";
-
-
             return {
                 embeds: [
                     {
@@ -646,6 +631,11 @@ export async function handleStatsMenu(request, requestBody) {
                                 inline: true
                             },
                             {
+                                name: "K/W Ratio",
+                                value: "`" + beautifyNumber(data.wiz.stats.kill_win_ratio) + "`",
+                                inline: true
+                            },
+                            {
                                 name: "Points Captured",
                                 value: "`" + beautifyNumber(data.wiz.stats.points_captured) + "`",
                                 inline: true
@@ -657,12 +647,56 @@ export async function handleStatsMenu(request, requestBody) {
                             },
                             {
                                 name: "Air time",
-                                value: "`" + data.wiz.stats.air_time + "`",
+                                value: "`" + data.wiz.stats.air_time + "`"
+                            },
+                            {
+                                name: "Class Specific Statistics",
+                                value: "Below you will find statistics per class."
+                            },
+                            {
+                                name: "Ancient",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[0][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[0][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
-                                name: "Class Specific Stats",
-                                value: table
+                                name: "Blood",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[1][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[1][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Fire",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[2][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[2][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Hydro",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[3][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[3][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Ice",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[4][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[4][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Kinetic",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[5][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[5][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Storm",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[6][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[6][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Toxic",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[7][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[7][1]) + "`\n-----------------",
+                                inline: true
+                            },
+                            {
+                                name: "Wither",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[8][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[8][1]) + "`\n-----------------",
+                                inline: true
                             }
                         ],
                         thumbnail: {
