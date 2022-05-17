@@ -31,14 +31,18 @@ export async function handleAvatar(request, requestBody) {
     }
 
     // Create the URL without file extension (can be GIF, PNG, etc.)
-    let url = "https://cdn.discordapp.com/avatars/" + user.id + "/" + user.avatar;
-
-    // If the avatar hash starts with "a_" then it's a gif
-    // else it's just an image, so I choose PNG
-    if(user.avatar.startsWith("a_")) {
-        url += ".gif?size=1024";
+    let url;
+    if(user.avatar) { // If there's no avatar then use default picture
+        url = "https://cdn.discordapp.com/avatars/" + user.id + "/" + user.avatar;
+        // If the avatar hash starts with "a_" then it's a gif
+        // else it's just an image, so I choose PNG
+        if(user.avatar.startsWith("a_")) {
+            url += ".gif?size=1024";
+        } else {
+            url += ".png?size=1024";
+        }
     } else {
-        url += ".png?size=1024";
+        url = "https://cdn.discordapp.com/embed/avatars/" + user.discriminator % 5 + ".png";
     }
 
     // Now we can return the embed
