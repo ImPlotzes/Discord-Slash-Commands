@@ -44,6 +44,10 @@ const structure = {
                     value: "kd"
                 },
                 {
+                    name: "Kill win ratio",
+                    value: "kw"
+                },
+                {
                     name: "Ancient kills",
                     value: "a_k"
                 },
@@ -109,6 +113,7 @@ const statNamesTable = {
     p: "Captured points",
     t: "Air time",
     kd: "Kill death ratio",
+    kw: "Kill win ratio",
     a_k: "Ancient kills",
     b_k: "Blood kills",
     f_k: "Fire kills",
@@ -185,6 +190,9 @@ export async function handleLeaderboard(request, requestBody) {
         }, requestBody.token);
         return;
     }
+
+    // Remove all entries that don't have the selected stat
+    leaderboard = leaderboard.filter(entry => entry[stat] != undefined);
 
     // Sort the leaderboard according to the selected stat type and get some info while doing it
     leaderboard.sort((a, b) => {
@@ -264,7 +272,7 @@ export async function handleLeaderboard(request, requestBody) {
     }
 
     // If the player is in the top 10 then show all top 10 players
-    if(selectedPlayerRank <= 10) {
+    if(selectedPlayerRank < 10) {
         for(let i = 0; i < leaderboard.length && i < 10; i++) {
             table += `
 #${((i + 1) + "      ").slice(0, 6)}| ${(leaderboard[i].name + "                   ").slice(0, 19)}| ${getStatPretty(leaderboard[i], stat)}`;

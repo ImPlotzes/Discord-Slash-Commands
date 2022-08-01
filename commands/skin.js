@@ -70,7 +70,7 @@ export async function handleSkin(request, requestBody) {
                     name: "Skin Preview"
                 },
                 image: {
-                    url: "https://www.mc-heads.net/body/" + uuid
+                    url: "https://visage.surgeplay.com/full/832/" + uuid
                 },
                 thumbnail: {
                     url: "https://skins.plotzes.ml/face?player=" + uuid
