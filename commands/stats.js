@@ -655,47 +655,47 @@ export async function handleStatsMenu(request, requestBody) {
                             },
                             {
                                 name: "Ancient",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[0][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[0][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[0][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[0][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[0][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Blood",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[1][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[1][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[1][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[1][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[1][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Fire",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[2][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[2][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[2][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[2][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[2][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Hydro",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[3][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[3][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[3][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[3][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[3][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Ice",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[4][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[4][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[4][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[4][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[4][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Kinetic",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[5][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[5][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[5][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[5][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[5][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Storm",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[6][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[6][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[6][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[6][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[6][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Toxic",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[7][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[7][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[7][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[7][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[7][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Wither",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[8][0]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[8][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[8][0]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[8][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[8][1]) + "`\n-----------------",
                                 inline: true
                             }
                         ],
