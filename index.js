@@ -125,7 +125,15 @@ async function handleRequest(event) {
             // So while 'handleCommand' is happening it'll already respond with '{type:5}'
             // to show the user a loading stage. 'handleCommand' will then edit the response
             // and replace it with the command generated response.
-            event.waitUntil(handleCommand(request, requestBody));
+            event.waitUntil(handleCommand(request, requestBody).catch(async e => {
+                await editMessage({
+                    embeds: [{
+                        title: "Internal Error",
+                        description: "An internal error occured while executing this command.\n```\n" + e + "\n```",
+                        color: parseInt("F12525", 16)
+                    }
+                ]}, requestBody.token);
+            }));
             return new Response("{\"type\":5}", {headers: {"content-type": "application/json"}});
 
             break;

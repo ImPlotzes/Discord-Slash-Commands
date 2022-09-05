@@ -99,7 +99,7 @@ export async function handleStatsCommand(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "Something went wrong contacting the API.\n```" + e + "\n```",
+                    description: "Something went wrong contacting the API.\n```\n" + e + "\n```",
                     color: parseInt("F12525", 16)
                 }
             ]
@@ -116,7 +116,7 @@ export async function handleStatsCommand(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "The API returned an unexpected response.\n```" + e + "\n```",
+                    description: "The API returned an unexpected response.\n```\n" + e + "\n```",
                     color: parseInt("F12525", 16)
                 }
             ]

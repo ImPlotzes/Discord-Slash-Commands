@@ -33,7 +33,7 @@ export async function handleImage(request, requestBody) {
         await editMessage({
             embeds: [{
                 title: "Not successful",
-                description: "Something went wrong while trying to get the token.\n```" + e + "```",
+                description: "Something went wrong while trying to get the token.\n```\n" + e + "\n```",
                 color: parseInt("F12525")
             }]
         }, requestBody.token);
@@ -82,7 +82,7 @@ export async function handleImage(request, requestBody) {
         await editMessage({
             embeds: [{
                 title: "Not successful",
-                description: "Something went wrong while trying to get the image.\n```" + e + "```",
+                description: "Something went wrong while trying to get the image.\n```\n" + e + "\n```",
                 color: parseInt("F12525")
             }]
         }, requestBody.token);
