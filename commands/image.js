@@ -22,69 +22,99 @@ export async function handleImage(request, requestBody) {
     // Get the subject
     const subject = requestBody.data.options[0].value;
 
-    // Define base url
-    let url = "https://img-srch.glitch.me/api/imagesearch/" + encodeURIComponent(subject) + "?offset=";
+    const url = new URL("https://duckduckgo.com");
+    url.searchParams.set("q", subject);
 
-    // Pick a random offset so we don't always just get one of the first 10 pictures
-    let offset = Math.round(Math.random() * 10) * 10;
-
-    // Add the offset to the url
-    url += offset;
-
-    // Get 10 random pictures of the API
-    // (Added User-Agent else it will return status 403 - Forbidden)
-    const response = await fetch(url, {
-        headers: {
-            "user-agent": "Plotzes-Commands-Discord-Bot / vX.X.X (Discord: Plotzes#8332)"
-        }
-    });
-
-    // If response wasn't successful then return an error message
-    if(!response.ok) {
+    // Get the HTML of the page
+    let html;
+    try {
+        html = await fetch(url).then(res => res.text());
+    } catch(e) {
         await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "Couldn't fetch the random pictures. Code: `" + response.status + "`",
-                    color: parseInt("F12525", 16)
-                }
-            ]
+            embeds: [{
+                title: "Not successful",
+                description: "Something went wrong while trying to get the token.\n```" + e + "```",
+                color: parseInt("F12525")
+            }]
         }, requestBody.token);
         return;
     }
 
-    // Try to parse the response body
-    // If it doesn't work then return an error
-    let responseBody;
+    // Parse the token we need from the HTML response
+    let token = html.match(/vqd *= *(['"])([\d-]+)\1;/);
+    if(!token || token.length != 3) {
+        await editMessage({
+            embeds: [{
+                title: "Not successful",
+                description: "Something went wrong while trying to parse the internal token.",
+                color: parseInt("F12525")
+            }]
+        }, requestBody.token);
+        return;
+    }
+    token = token[2];
+
+    // Create the correct URL to get the image
+    url.pathname = "/i.js";
+    url.searchParams.set("l", "us-en");
+    url.searchParams.set("o", "json");
+    url.searchParams.set("vqd", token);
+    url.searchParams.set("f", ",,,");
+    url.searchParams.set("p", "1");
+    url.searchParams.set("v7exp", "a");
+
+    // Try to get the images
+    let json;
     try {
-        responseBody = await response.json();
+        json = (await fetch(url, {
+            headers: {
+                "Authority": "duckduckgo.com",
+                "Accept": "application/json, text/javascript, */*; q=0.01",
+                "sec-fetch-dest": "empty",
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36",
+                "sec-fetch-site": "same-origin",
+                "sec-fetch-mode": "cors",
+                "referer": "https://duckduckgo.com/",
+                "accept-language": "en-US,en;q=0.9"
+            }
+        }).then(res => res.json())).results;
     } catch(e) {
         await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "Got an unexpected response format. Try again later!",
-                    color: parseInt("F12525")
-                }
-            ]
+            embeds: [{
+                title: "Not successful",
+                description: "Something went wrong while trying to get the image.\n```" + e + "```",
+                color: parseInt("F12525")
+            }]
+        }, requestBody.token);
+        return;
+    }
+
+    // Return a message if there are no images
+    if(json.length == 0) {
+        await editMessage({
+            embeds: [{
+                title: "No images found",
+                description: "No images were found for that search query, please search for something else.",
+                color: parseInt("76cc00", 16)
+            }]
         }, requestBody.token);
         return;
     }
 
     // Pick a random picture from the response array
-    const imageObject = responseBody[Math.round(Math.random() * (responseBody.length - 1))];
+    const imageObject = json[Math.round(Math.random() * (json.length - 1))];
 
     // Return the embed with the URL from the object
     await editMessage({
         embeds: [
             {
                 title: subject,
-                url: imageObject.pageUrl,
+                url: imageObject.url,
                 image: {
-                    url: imageObject.url
+                    url: imageObject.image
                 },
                 footer: {
-                    text: imageObject.alt
+                    text: imageObject.title
                 },
                 color: parseInt("76cc00", 16)
             }
