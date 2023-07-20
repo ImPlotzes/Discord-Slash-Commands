@@ -89,7 +89,7 @@ export async function handleStatsCommand(request, requestBody) {
     // Get the stats from the API
     let response;
     try {
-        response = await fetch("https://api.plotzes.ml/stats?player=" + encodeURIComponent(user), {
+        response = await fetch("https://api.plotzes.com/stats?player=" + encodeURIComponent(user), {
             headers: {
                 "user-agent": (SCRIPT_IDENTIFIER || "bot-clone") + " (The '/stats' command)"
             }
@@ -152,8 +152,8 @@ export async function handleStatsCommand(request, requestBody) {
                 author: {
                     name: "TNT Games"
                 },
-                title: data.profile.name,
-                url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                title: data.profile.name.replace(/_/g, "\\_"),
+                url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                 color: parseInt("76cc00", 16),
                 fields: [
                     {
@@ -208,7 +208,7 @@ export async function handleStatsCommand(request, requestBody) {
                     }
                 ],
                 thumbnail: {
-                    url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                    url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                 },
                 footer: {
                     text: "Choose a game below."
@@ -277,8 +277,8 @@ export async function handleStatsMenu(request, requestBody) {
                         author: {
                             name: "TNT Games"
                         },
-                        title: data.profile.name,
-                        url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        title: data.profile.name.replace(/_/g, "\\_"),
+                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -333,7 +333,7 @@ export async function handleStatsMenu(request, requestBody) {
                             }
                         ],
                         thumbnail: {
-                            url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                            url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                         },
                         footer: {
                             text: "Choose a game below."
@@ -352,8 +352,8 @@ export async function handleStatsMenu(request, requestBody) {
                         author: {
                             name: "Bow Spleef"
                         },
-                        title: data.profile.name,
-                        url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        title: data.profile.name.replace(/_/g, "\\_"),
+                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -392,7 +392,7 @@ export async function handleStatsMenu(request, requestBody) {
                             }
                         ],
                         thumbnail: {
-                            url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                            url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                         },
                         footer: {
                             text: "Choose a game below."
@@ -411,8 +411,8 @@ export async function handleStatsMenu(request, requestBody) {
                         author: {
                             name: "TNT Run"
                         },
-                        title: data.profile.name,
-                        url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        title: data.profile.name.replace(/_/g, "\\_"),
+                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -454,7 +454,7 @@ export async function handleStatsMenu(request, requestBody) {
                             }
                         ],
                         thumbnail: {
-                            url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                            url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                         },
                         footer: {
                             text: "Choose a game below."
@@ -473,8 +473,8 @@ export async function handleStatsMenu(request, requestBody) {
                         author: {
                             name: "PVP Run"
                         },
-                        title: data.profile.name,
-                        url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        title: data.profile.name.replace(/_/g, "\\_"),
+                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -524,7 +524,7 @@ export async function handleStatsMenu(request, requestBody) {
                             }
                         ],
                         thumbnail: {
-                            url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                            url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                         },
                         footer: {
                             text: "Choose a game below."
@@ -543,8 +543,8 @@ export async function handleStatsMenu(request, requestBody) {
                         author: {
                             name: "TNT Tag"
                         },
-                        title: data.profile.name,
-                        url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        title: data.profile.name.replace(/_/g, "\\_"),
+                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -555,6 +555,11 @@ export async function handleStatsMenu(request, requestBody) {
                             {
                                 name: "Kills",
                                 value: "`" + beautifyNumber(data.tag.kills) + "`",
+                                inline: true
+                            },
+                            {
+                                name: "Deaths",
+                                value: "`" + beautifyNumber(data.tag.deaths) + "`",
                                 inline: true
                             },
                             {
@@ -582,7 +587,7 @@ export async function handleStatsMenu(request, requestBody) {
                             }
                         ],
                         thumbnail: {
-                            url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                            url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                         },
                         footer: {
                             text: "Choose a game below."
@@ -601,8 +606,8 @@ export async function handleStatsMenu(request, requestBody) {
                         author: {
                             name: "Wizards"
                         },
-                        title: data.profile.name,
-                        url: "https://www.plotzes.ml/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        title: data.profile.name.replace(/_/g, "\\_"),
+                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -655,52 +660,52 @@ export async function handleStatsMenu(request, requestBody) {
                             },
                             {
                                 name: "Ancient",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[0][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[0][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[0][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[0][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[0][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[0][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[0][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[0][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Blood",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[1][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[1][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[1][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[1][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[1][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[1][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[1][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[1][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Fire",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[2][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[2][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[2][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[2][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[2][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[2][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[2][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[2][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Hydro",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[3][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[3][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[3][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[3][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[3][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[3][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[3][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[3][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Ice",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[4][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[4][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[4][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[4][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[4][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[4][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[4][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[4][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Kinetic",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[5][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[5][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[5][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[5][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[5][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[5][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[5][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[5][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Storm",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[6][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[6][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[6][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[6][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[6][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[6][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[6][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[6][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Toxic",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[7][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[7][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[7][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[7][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[7][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[7][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[7][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[7][1]) + "`\n-----------------",
                                 inline: true
                             },
                             {
                                 name: "Wither",
-                                value: "Kills: `" + beautifyNumber(data.wiz.classes[8][0]) + "`\nDamage: `" + beautifyNumber(data.wiz.classes[8][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[8][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[8][1]) + "`\n-----------------",
+                                value: "Kills: `" + beautifyNumber(data.wiz.classes[8][0]) + "`\nDamage taken: `" + beautifyNumber(data.wiz.classes[8][5]) + "`\nAssists: `" + beautifyNumber(data.wiz.classes[8][2]) + "`\nDeaths: `" + beautifyNumber(data.wiz.classes[8][1]) + "`\n-----------------",
                                 inline: true
                             }
                         ],
                         thumbnail: {
-                            url: "https://skins.plotzes.ml/face?player=" + data.mc.stats.UUID
+                            url: "https://skins.plotzes.com/face?player=" + data.mc.stats.UUID + "&rand=" + Math.random()
                         },
                         footer: {
                             text: "Choose a game below."

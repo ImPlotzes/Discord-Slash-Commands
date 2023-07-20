@@ -1,10 +1,15 @@
 name = "disc-commands"
 workers_dev = true
-compatibility_date = "2021-07-22"
+compatibility_date = "2023-03-16"
 main = "./index.js"
 
 # Account ID of your Cloudflare account
 account_id = "64bebdd8439aa2828fd93170fd7e2e88"
+
+# Add the service bining for the mojang-api worker
+services = [
+  { binding = "MOJANG_API", service = "mojang-api" }
+]
 
 # The public key of your Discord application
 [vars]

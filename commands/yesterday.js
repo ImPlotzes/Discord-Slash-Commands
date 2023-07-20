@@ -24,9 +24,10 @@ export async function handleYesterday(request, requestBody) {
     const user = requestBody.data.options[0].value;
 
     // Get the stats from the API made by marmottchen
-    let response;
+    let response, body;
     try {
         response = await fetch("https://marmottchen.eu.pythonanywhere.com/" + encodeURIComponent(user) + "/yesterday/json");
+        body = await response.json();
     } catch(e) {
         await editMessage({
             embeds: [
@@ -49,44 +50,7 @@ export async function handleYesterday(request, requestBody) {
             embeds: [
                 {
                     title: "Not successful",
-                    description: "The API returned an error.\n```\n" + response.status + "\n```",
-                    color: parseInt("F12525", 16),
-                    footer: {
-                        text: "Statistics provided by marmottchen."
-                    }
-                }
-            ]
-        }, requestBody.token);
-        return;
-    }
-
-    // Get the response text from the API
-    let body = await response.text();
-    if(body == "ERROR") {
-      await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "The API returned an error, this can happen if `" + user + "` is an untracked player.",
-                    color: parseInt("F12525", 16),
-                    footer: {
-                        text: "Statistics provided by marmottchen."
-                    }
-                }
-            ]
-        }, requestBody.token);
-        return;
-    }
-
-    // Try to parse the response into a JSON object
-    try {
-        body = JSON.parse(body);
-    } catch(e) {
-        await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "The API returned an unexpected response.\n```\n" + e + "\n```",
+                    description: "The API returned an error.\n```\n" + (body.error ?? response.status) + "\n```",
                     color: parseInt("F12525", 16),
                     footer: {
                         text: "Statistics provided by marmottchen."
@@ -120,7 +84,7 @@ export async function handleYesterday(request, requestBody) {
                 author: {
                     name: "TNT Wizards"
                 },
-                title: body.player.name,
+                title: body.player.name.replace(/_/g, "\\_"),
                 description: "Showing the statistics from <t:" + Math.round(new Date(body.date).getTime() / 1000) + ":D>.",
                 url: "https://marmottchen.eu.pythonanywhere.com/" + encodeURIComponent(body.player.name),
                 color: parseInt("76cc00", 16),
@@ -215,7 +179,7 @@ export async function handleYesterday(request, requestBody) {
                     }
                 ],
                 thumbnail: {
-                    url: "https://skins.plotzes.ml/face?player=" + body.player.uuid
+                    url: "https://skins.plotzes.com/face?player=" + body.player.uuid
                 },
                 footer: {
                     text: "Statistics provided by marmottchen."

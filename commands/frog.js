@@ -4,6 +4,13 @@
 const structure = {
     name: "frog",
     description: "Get a random frog picture! :D",
+    options: [
+        {
+            type: 5,
+            name: "gif",
+            description: "If true, then it will return a gif."
+        }
+    ]
 };
 
 // Import the utils
@@ -28,8 +35,8 @@ export async function handleFrog(request, requestBody) {
     }
 
     // Parse the token we need from the HTML response
-    let token = html.match(/vqd *= *(['"])([\d-]+)\1;/);
-    if(!token || token.length != 3) {
+    let token = html.match(/<script.*?id="deep_preload_script".*?src="(.*?)"/);
+    if(!token || token.length != 2) {
         await editMessage({
             embeds: [{
                 title: "Not successful",
@@ -39,14 +46,19 @@ export async function handleFrog(request, requestBody) {
         }, requestBody.token);
         return;
     }
-    token = token[2];
+    token = new URL(token[1]).searchParams.get("vqd");
 
     // Create the correct URL to get the image
     url.pathname = "/i.js";
     url.searchParams.set("l", "us-en");
     url.searchParams.set("o", "json");
     url.searchParams.set("vqd", token);
-    url.searchParams.set("f", ",,,");
+    // If the user wants a gif then select that
+    if(requestBody.data.options && requestBody.data.options[0].value) {
+        url.searchParams.set("f", ",,,type:gif,,");
+    } else {
+        url.searchParams.set("f", ",,,");
+    }
     url.searchParams.set("p", "1");
     url.searchParams.set("v7exp", "a");
 

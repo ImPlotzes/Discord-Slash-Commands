@@ -1,14 +1,22 @@
 export async function editMessage(newMessage, token) {
     const editURL = "https://discord.com/api/v9/webhooks/865321519605612554/" + token + "/messages/@original";
 
-    // Edit the thinking message with the generated one and return the response
-    return fetch(editURL, {
+    // Edit the original message with the new message
+    const response = await fetch(editURL, {
         method: "PATCH",
         headers: {
-            "content-type": "application/json"
+            "Content-Type": "application/json"
         },
-        body: JSON.stringify(newMessage),
+        body: JSON.stringify(newMessage)
     });
+
+    // If the response is not 200, log the status for debugging
+    if(!response.ok) {
+        console.log("Error editing message: HTTP " + response.status + " " + response.statusText);
+    }
+
+    // Return the response
+    return response;
 }
 
 

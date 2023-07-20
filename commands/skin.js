@@ -20,51 +20,48 @@ import { editMessage } from "../utils";
 
 export async function handleSkin(request, requestBody) {
     // Get the user (this can be their name OR their UUID)
-    const user = requestBody.data.options[0].value;
+    let user = requestBody.data.options[0].value;
 
-    // Try to get the account data to check if the user exists
-    const accountRes = await fetch("https://api.ashcon.app/mojang/v1/user/" + user);
-
-    // If the fetch wasn't successful then send their response back as to why it wasn't successful
-    if(!accountRes.ok) {
-        await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "Couldn't get the UUID of `" + user + "`.\n```\n" + accountRes.statusText + "\n```",
-                    color: parseInt("F12525", 16)
-                }
-            ]
-        }, requestBody.token);
-        return;
-    }
-
-    let accountData;
+    // Fetch Minecraft account data
+    let mojangResponse, mojangBody;
     try {
-        // Try to parse the response body into a JSON object
-        accountData = await accountRes.json();
+        mojangResponse = await MOJANG_API.fetch("http://botzes/v1/user?player=" + encodeURIComponent(user));
+        mojangBody = await mojangResponse.json();
     } catch(e) {
-        // For some reason the API didn't return JSON... so return an error message
+        console.log(e);
+
+        // Return an error
         await editMessage({
-            embeds: [
-                {
-                    title: "Not successful",
-                    description: "Couldn't get the UUID of `" + user + "`. Got an unexpected response.",
-                    color: parseInt("F12525", 16)
-                }
-            ]
+            embeds: [{
+                title: "Not successful",
+                description: "Something went wrong while trying to get the user's data.\n```\n" + e + "\n```",
+                color: parseInt("F12525", 16)
+            }]
         }, requestBody.token);
         return;
     }
 
-    // Get their UUID
-    const uuid = accountData.uuid;
+    // Check if the response was successful
+    if(mojangResponse.status != 200) {
+        // Return an error
+        await editMessage({
+            embeds: [{
+                title: "Not successful",
+                description: "Something went wrong while trying to get the user's data.\n```\n" + mojangBody.error + "\n```",
+                color: parseInt("F12525", 16)
+            }]
+        }, requestBody.token);
+        return;
+    }
+
+    const username = mojangBody.username;
+    const uuid = mojangBody.uuid;
 
     // Now we can return the embed
     await editMessage({
         embeds: [
             {
-                title: accountData.username,
+                title: username.replace(/_/g, "\\_"),
                 color: parseInt("76cc00", 16),
                 author: {
                     name: "Skin Preview"
@@ -73,9 +70,9 @@ export async function handleSkin(request, requestBody) {
                     url: "https://visage.surgeplay.com/full/832/" + uuid
                 },
                 thumbnail: {
-                    url: "https://skins.plotzes.ml/face?player=" + uuid
+                    url: "https://skins.plotzes.com/face?player=" + uuid + "&rand=" + Math.random()
                 },
-                url: "https://minerender.org/embed/skin/?skin=" + accountData.username + "&shadow=true"
+                url: "https://minerender.org/embed/skin/?skin=" + username + "&shadow=true"
             }
         ]
     }, requestBody.token);

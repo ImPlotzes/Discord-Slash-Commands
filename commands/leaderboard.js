@@ -139,7 +139,7 @@ export async function handleLeaderboard(request, requestBody) {
     // Fetch the leaderboard JSON file
     let lbResponse 
     try {
-        lbResponse = await fetch("https://api.plotzes.ml/storage?name=leaderboard.json", {
+        lbResponse = await fetch("https://api.plotzes.com/storage?name=leaderboard.json", {
             headers: {
                 "user-agent": (SCRIPT_IDENTIFIER || "bot-clone") + " (The '/leaderboard' command)"
             }
@@ -260,7 +260,7 @@ export async function handleLeaderboard(request, requestBody) {
             embeds: [
                 {
                     title: "TNT Wizards",
-                    description: "The player `" + player + "` isn't on the leaderboard. To add that player click [here](https://www.plotzes.ml/stats/" + encodeURIComponent(player) +").\n\nShowing the top ten players:\n```\n" + table + "\n```",
+                    description: "The player `" + player + "` isn't on the leaderboard. To add that player click [here](https://www.plotzes.com/stats/" + encodeURIComponent(player) +").\n\nShowing the top ten players:\n```\n" + table + "\n```",
                     footer: {
                         text: beautifyNumber(leaderboard.length) + " total players"
                     },

@@ -45,6 +45,11 @@ export async function handleAvatar(request, requestBody) {
         url = "https://cdn.discordapp.com/embed/avatars/" + user.discriminator % 5 + ".png";
     }
 
+    let discriminator = "";
+    if(user.discriminator != "0") {
+        discriminator = "#" + user.discriminator;
+    }
+
     // Now we can return the embed
     await editMessage({
         embeds: [
@@ -52,7 +57,7 @@ export async function handleAvatar(request, requestBody) {
                 author: {
                     name: "Avatar"
                 },
-                title: user.username + "#" + user.discriminator,
+                title: user.username.replace(/_/g, "\\_") + discriminator,
                 image: {
                     url: url
                 },

@@ -107,7 +107,6 @@ async function handleRequest(event) {
     // Turn the request body into a JSON object; string ==> object
     const requestBody = JSON.parse(body);
 
-
     // Check what type of interaction it is: 1, 2 or 3
     // 1: Ping
     // 2: Command

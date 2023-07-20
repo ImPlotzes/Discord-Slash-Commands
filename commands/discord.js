@@ -18,7 +18,7 @@ export async function handleDiscord(request, requestBody) {
         embeds: [
             {
                 title: "Discord invite link",
-                description: "Here you go! Click the button below to join the server.\n\nIf you want to share the link easily then you can also use https://www.plotzes.ml/discord.",
+                description: "Here you go! Click the button below to join the server.\n\nIf you want to share the link easily then you can also use https://www.plotzes.com/discord.",
                 color: parseInt("76cc00", 16)
             }
         ],
