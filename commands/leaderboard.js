@@ -137,7 +137,7 @@ export async function handleLeaderboard(request, requestBody) {
     const stat = requestBody.data.options[0].value;
 
     // Fetch the leaderboard JSON file
-    let lbResponse 
+    let lbResponse;
     try {
         lbResponse = await fetch("https://api.plotzes.com/storage?name=leaderboard.json", {
             headers: {
@@ -260,7 +260,7 @@ export async function handleLeaderboard(request, requestBody) {
             embeds: [
                 {
                     title: "TNT Wizards",
-                    description: "The player `" + player + "` isn't on the leaderboard. To add that player click [here](https://www.plotzes.com/stats/" + encodeURIComponent(player) +").\n\nShowing the top ten players:\n```\n" + table + "\n```",
+                    description: "The player `" + player + "` isn't on the leaderboard. To add that player click [here](https://plotzes.com/stats/" + encodeURIComponent(player) +").\n\nShowing the top ten players:\n```\n" + table + "\n```",
                     footer: {
                         text: beautifyNumber(leaderboard.length) + " total players"
                     },

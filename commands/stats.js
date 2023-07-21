@@ -153,7 +153,7 @@ export async function handleStatsCommand(request, requestBody) {
                     name: "TNT Games"
                 },
                 title: data.profile.name.replace(/_/g, "\\_"),
-                url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                 color: parseInt("76cc00", 16),
                 fields: [
                     {
@@ -278,7 +278,7 @@ export async function handleStatsMenu(request, requestBody) {
                             name: "TNT Games"
                         },
                         title: data.profile.name.replace(/_/g, "\\_"),
-                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -353,7 +353,7 @@ export async function handleStatsMenu(request, requestBody) {
                             name: "Bow Spleef"
                         },
                         title: data.profile.name.replace(/_/g, "\\_"),
-                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -412,7 +412,7 @@ export async function handleStatsMenu(request, requestBody) {
                             name: "TNT Run"
                         },
                         title: data.profile.name.replace(/_/g, "\\_"),
-                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -474,7 +474,7 @@ export async function handleStatsMenu(request, requestBody) {
                             name: "PVP Run"
                         },
                         title: data.profile.name.replace(/_/g, "\\_"),
-                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -544,7 +544,7 @@ export async function handleStatsMenu(request, requestBody) {
                             name: "TNT Tag"
                         },
                         title: data.profile.name.replace(/_/g, "\\_"),
-                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
@@ -607,7 +607,7 @@ export async function handleStatsMenu(request, requestBody) {
                             name: "Wizards"
                         },
                         title: data.profile.name.replace(/_/g, "\\_"),
-                        url: "https://www.plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
+                        url: "https://plotzes.com/stats/" + encodeURIComponent(data.mc.stats.UUID),
                         color: parseInt("76cc00", 16),
                         fields: [
                             {
